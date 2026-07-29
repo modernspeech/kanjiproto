@@ -1,0 +1,71 @@
+/* SPボトムナビ */
+.bottom-nav{
+  position:fixed; 
+  left:0;
+  right: 0; 
+  /*transform:translateX(-50%);*/
+  bottom:16px; 
+  margin: 0 auto;
+  max-width: 640px;
+max-height: 80px;
+  /* vw を使わないフォールバック（UI出し入れの影響を受けにくい） */
+  width: calc(100% - 32px);
+  background:#fff;
+  border:1px solid var(--border); 
+  border-radius:999px; 
+  box-shadow:var(--shadow);
+  display:none; 
+  justify-content:space-around; 
+  padding:12px 14px; 
+  z-index:50;
+    /* fixed × transform を回避 */
+  transform:none;
+  -webkit-transform:none;
+}
+
+.bn-item{
+  appearance: none;
+  background: transparent;
+  border: 0;
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 6px;
+  padding: 8px 2px;
+  color: #94a3b8;
+  text-decoration: none;
+  border-radius: 12px;
+}
+
+
+.bn-item .bi{ width: 24px; height: 24px; fill: currentColor; }
+.bn-item span{ font-size: 12px; line-height: 1; }
+
+.bn-item.is-active,
+.bn-item:hover{ color: #4f46e5; background: #f5f7ff; }
+
+/* iOSの安全領域 */
+@supports(padding: env(safe-area-inset-bottom)){
+  .bottom-nav{
+    padding-bottom: calc(env(safe-area-inset-bottom) + 10px);
+    bottom: max(16px, env(safe-area-inset-bottom));
+  }
+}
+
+/* “小さいビューポート”単位に対応しているブラウザではこちらを優先 */
+@supports (width: 100svw) {
+  .bottom-nav{
+    width: min(640px, calc(100svw - 32px));
+  }
+}
+
+/* 表示条件：SPのみ */
+@media (max-width: 1024px){
+  .bottom-nav{ display: grid; grid-template-columns: repeat(4, 1fr); }
+}
+
+/* PCでは明示的に非表示 */
+@media (min-width: 1025px){
+  .bottom-nav{ display: none !important; }
+}

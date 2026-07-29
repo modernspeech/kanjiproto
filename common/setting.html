@@ -1,0 +1,41 @@
+<!-- setting.html — どのページにも読み込める設定モーダル断片 -->
+<dialog id="settingsDialog" class="settings-dialog card">
+  <!-- × は JS で委譲して閉じます。form method="dialog" で ESC も可 -->
+  <form method="dialog">
+    <button type="submit" class="close" aria-label="閉じる">×</button>
+  </form>
+
+  <div class="s-wrap">
+    <header class="s-head">
+      <h2>読みテストの設定</h2>
+      <p class="muted">保存すると全ページで共通の設定として使われます。</p>
+    </header>
+
+    <section class="s-body">
+      <div class="s-field">
+        <label class="s-label" for="setQuestionsPerGroup">1グループの出題数</label>
+        <input id="setQuestionsPerGroup" type="number" min="0" step="1" placeholder="0=全問" class="s-input">
+        <div class="muted">0 または空欄で、そのグループの全問題を出題</div>
+      </div>
+
+      <div class="s-field">
+        <span class="s-label">出題順</span>
+        <label class="s-radio"><input type="radio" name="setOrder" value="sequential"> 順番</label>
+        <label class="s-radio"><input type="radio" name="setOrder" value="random"> ランダム</label>
+      </div>
+
+      <div class="s-field">
+        <label class="s-check">
+          <input id="setEnforceHiragana" type="checkbox">
+          ひらがな以外は不正解として扱う<br>（長音記号「ー」は許可）
+        </label>
+      </div>
+    </section>
+
+    <footer class="s-foot">
+      <button type="button" id="btnSettingsReset" class="btn-reset">既定に戻す</button>
+      <button type="button" id="btnSettingsCancel" class="btn-cancel">キャンセル</button>
+      <button type="button" id="btnSettingsSave" class="btn-save">保存</button>
+    </footer>
+  </div>
+</dialog>

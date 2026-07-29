@@ -1,0 +1,187 @@
+/* css/sidebar.css */
+/* 1) カード自体は可変に（固定/上限を外す） */
+/* サイドバーのカード本体：見た目＋高さ上限＋内側スクロール */
+.sidebar{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:12px;
+
+  /* ここで高さの上限を決める（必要なら数値は好みで調整） */
+  max-height: calc(100vh - 100px);
+
+  /* 中身を縦に並べて、ナビ部分だけスクロールさせる準備 */
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;    /* 余りは中でスクロール */
+}
+
+
+
+/* ナビ全体がスクロールする領域 */
+.side-nav{
+  padding:16px;
+  font-size: 0.9rem;
+
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+/* WebKit 系（Chrome / Edge / Safari）用 */
+.side-nav::-webkit-scrollbar{
+  width:7px;                 /* 細め */
+}
+.side-nav::-webkit-scrollbar-track{
+  background:transparent;    /* トラックは目立たせない */
+}
+.side-nav::-webkit-scrollbar-thumb{
+  background:#d1d5db;
+  border-radius:999px;
+  border:2px solid transparent;  /* ちょっと内側に細く見せる */
+  background-clip:padding-box;
+}
+.side-nav:hover::-webkit-scrollbar-thumb{
+  background:#eaeaea;        /* ホバー時だけ少し濃く */
+}
+.side-title{font-weight:700; margin:6px 0 8px; color:#334155;}
+.side-section{margin:18px 0 6px; font-weight:700; color:#334155;}
+.side-item{
+font-size: 0.93rem;
+  display:flex; align-items:center; gap:10px;
+  padding:10px 12px; border-radius:10px; color:#334155; text-decoration:none;
+}
+.side-item .bi{width:18px; height:18px; fill:currentColor}
+.side-item:hover{background:#f3f4f6}
+.side-item.is-active{background:#eaf0ff; color:#1f3bb3;}
+.side-links{margin-top:16px; display:grid; gap:8px}
+.side-links a{color:#6b7280; text-decoration:none; font-size:12px}
+/* 3) フッター/ロゴはフローに乗せる（absolute をやめる） */
+.side-brand{
+  margin-top:10px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+
+  /* ここを修正 ↓ */
+  position: static;
+  bottom: auto;
+  right: auto;
+  left: auto;
+}
+.side-brand .logo{font-weight:800; letter-spacing:2px; color:#a78bfa}
+
+.side-brand img {
+    width: 100px;
+    height: auto;
+}
+
+.footer-logo .copyright {
+    font-size: 0.8rem;
+    color: #555;
+    text-align: center;
+}
+
+/* アコーディオン用の最小差分 */
+.side-acc-toggle { display:flex; align-items:center; gap:8px; }
+.side-acc-toggle .caret { margin-left:auto; transition: transform .2s; }
+.side-acc-toggle.is-open .caret { transform: rotate(90deg); }
+
+/* リストの中身（既存の .side-item とは別枠: 小さめ） */
+.side-acc-panel { padding: 6px 0 10px 12px; }
+.side-subitem { 
+display:block; padding:8px 10px; border-radius:8px; text-decoration:none; color:inherit; font-size: 0.9rem; }
+.side-subitem:hover { background: rgba(0,0,0,.04); }
+.side-subitem.is-sub {
+ padding-left:22px; font-size: 0.85rem; opacity:.9; }
+
+/* 付録トグルは「行リンク風」にする */
+.side-acc-toggle {
+  appearance: none;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  padding: 8px 10px !important;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  color: inherit;
+}
+
+/* hoverしても色付き背景を出さない（.side-itemのホバーを上書き） */
+.side-acc-toggle:hover {
+  background: transparent !important;
+}
+
+/* 右側の「▶」だけ回転させる */
+.side-acc-toggle .caret { margin-left: auto; transition: transform .2s; }
+.side-acc-toggle.is-open .caret { transform: rotate(90deg); }
+
+/* アイコンのサイズを他の行と合わせる（必要なら） */
+.side-acc-toggle .bi { width: 20px; height: 20px; }
+
+/* SPではサイドバーを非表示（下部メニューに任せる） */
+@media (max-width:1024px){
+  .sidebar{display:none}
+  
+}
+/* 2) 内側だけスクロールさせない（外側ごと伸びる） */
+/* サイドバー全体は縦に並べるコンテナに */
+/* ===== サイドバー全体の位置：グリッド内で“ほぼ固定” ===== */
+#siteSidebar{
+  position: sticky;   /* ← ここは fixed にしない */
+  top: 84px;          /* ヘッダーの高さに合わせる */
+  z-index: 100;
+  align-self: flex-start;
+}
+/* スマホでは従来どおり非表示＆フローへ */
+@media (max-width: 1024px){
+  .layout { grid-template-columns: 1fr; }
+  #siteSidebar{
+    position: relative;
+    height: auto;
+    overflow: visible;
+    border-right: none;
+display: none;
+  }
+}
+
+/* === 共通モーダル基盤（既存と重複OK・なければこれで動きます） === */
+.modal{ position:fixed; inset:0; display:none; z-index:11000; background:transparent; }
+.modal.is-open{ display:block; }
+.modal__overlay{ position:absolute; inset:0; background:rgba(0,0,0,.35); backdrop-filter:blur(2px); }
+.modal__dialog{
+  position:relative; margin:6vh auto; width:clamp(320px,92vw,720px);
+  max-height:88vh; background:#fff; border-radius:16px; box-shadow:0 10px 30px rgba(0,0,0,.2);
+  display:flex; flex-direction:column;
+}
+.modal__header{ padding:12px 16px; border-bottom:1px solid #eee; display:flex; justify-content:space-between; align-items:center; }
+.modal__title{ font-size:16px; font-weight:700; }
+.modal__close{ background:transparent; border:0; font-size:20px; line-height:1; cursor:pointer; }
+.modal__body{ padding: 16px 18px; overflow:auto; }
+@media (max-width:768px){
+  .modal__dialog{ margin:10px auto; width:95vw; height:100vh; max-height:none; border-radius:1rem; }
+  .msg-article p {
+    font-size: 0.8rem;
+}
+.grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 5px;
+    padding: 0;
+}
+}
+
+/* === メッセージ一覧の見た目 === */
+.msg-list{ list-style:none; margin:0; padding:0; }
+.msg-item{ padding:12px 14px; border-bottom:1px solid #eee; }
+.msg-row{ display:flex; gap:10px; align-items:flex-start; }
+.msg-avatar{ width:32px; height:32px; border-radius:50%; background:#e5e7eb; flex:0 0 32px; }
+.msg-main{ flex:1; min-width:0; }
+.msg-head{ display:flex; gap:8px; align-items:center; }
+.msg-name{ font-weight:700; }
+.msg-date{ color:#6b7280; font-size:12px; }
+.msg-text{ margin-top:4px; line-height:1.7; word-break:break-word; white-space:pre-wrap; }
+.msg-empty{ padding:24px; text-align:center; color:#6b7280; }

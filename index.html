@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>漢字2200ビューワ</title>
+  <link rel="stylesheet" href="./style.css" />
+<!-- head 内に追加（必要な太さだけ。Klee One は 400 / 600）-->
+<link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+  /* 全体に適用する例 */
+  body { font-family: "Klee One", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif; }
+  /* 見出しだけに使う例（推奨） */
+  .klee { font-family: "Klee One", sans-serif; }
+  
+</style>
+<link rel="stylesheet" href="common/header.css"
+      data-pagespeed-no-transform>
+<link rel="stylesheet" href="common/sidebar.css"
+      data-pagespeed-no-transform>
+<link rel="stylesheet" href="common/home.css"
+      data-pagespeed-no-transform>
+      <link rel="stylesheet" href="common/setting.css"
+      data-pagespeed-no-transform>
+  <link rel="stylesheet" href="common/bottom-nav.css">
+</head>
+<body>
+    <svg xmlns="http://www.w3.org/2000/svg" style="display:none;">
+
+          <symbol id="bi-mic" viewBox="0 0 16 16">
+  <path d="M5 3a3 3 0 0 1 6 0v5a3 3 0 0 1-6 0z"/>
+  <path d="M3.5 6.5A.5.5 0 0 1 4 7v1a4 4 0 0 0 8 0V7a.5.5 0 0 1 1 0v1a5 5 0 0 1-4.5 4.975V15h3a.5.5 0 0 1 0 1h-7a.5.5 0 0 1 0-1h3v-2.025A5 5 0 0 1 3 8V7a.5.5 0 0 1 .5-.5"/>
+    </symbol>
+    </svg>
+  <!-- 共通ヘッダー／サイドバー読み込み領域 -->
+  <div id="siteHeader" data-header-src="./common/header.html"></div>
+  <div class="page-bg"></div>
+  <div class="home-layout layout">
+    <!-- サイドバー（PC表示） -->
+    <aside id="siteSidebar" data-sidebar-src="./common/sidebar.html"></aside>
+
+    <main class="content">
+      <!-- ここから、このページ固有の中身 -->
+<!-- 検索ブロック -->
+<section class="search-block card">
+  <!-- ← ここをフォームに -->
+  <form id="searchForm" class="search-row" autocomplete="off">
+    <input id="q" type="search" class="search-input"
+           placeholder="漢字 / よみ / 意味 / 熟語 / 部首 / JLPT / 学年 / 漢字番号（123 or 100-199）…" />
+    <div class="search-actions">
+      <button id="searchBtn" class="btn-primary" type="submit">検索</button>
+      <button id="searchMic" class="btn-mic" type="button"
+              aria-pressed="false" aria-label="音声入力を開始"><svg class="bi"><use href="#bi-mic"/></svg></button>
+    </div>
+  </form>
+
+<div class="search-pills" role="group" aria-label="検索ショートカット">
+  <button id="radical-toggle" class="pill search-toggle" type="button">部首検索</button>
+  <button id="strokes-toggle" class="pill search-toggle" type="button">画数検索</button>
+  <button id="ink-toggle" class="pill search-toggle" type="button"
+          aria-controls="ink-panel" aria-expanded="false">手書き検索</button>
+  <button id="history-toggle"  class="pill search-toggle" type="button">検索履歴</button>
+</div>
+
+  <!-- 手書き検索（初期は非表示） -->
+  <section id="ink-panel" class="ink-panel hidden" aria-hidden="true">
+        <header class="ink-head">
+      <div class="title">手書き検索</div>
+      <div class="controls">
+        <button id="ink-close" class="btn-ghost" type="button">閉じる</button>
+      </div>
+    </header>
+    <div class="ink">
+    <div class="ink-left">
+      <canvas id="ink" width="320" height="320" aria-label="手書き入力パッド"></canvas>
+      <div class="ink-tools">
+        <div class="ink-button">
+        <button id="ink-clear" type="button">クリア</button>
+        <button id="ink-undo"  type="button">一筆戻す</button>
+        <button id="ink-grid" type="button" aria-pressed="true">罫線</button>
+</div>
+        <button id="ink-search" type="button">手書きで検索</button>
+      
+      </div>
+      <small class="ink-hint">太めに1文字だけ書いてください（複数画OK）</small>
+    </div>
+    <div class="ink-right">
+      <div class="ink-topk" id="ink-topk"></div>
+    </div></div>
+  </section>
+    <!-- ▼ 部首検索：パネル（部首一覧） -->
+  <section id="radical-panel" class="radical-panel hidden" aria-hidden="true">
+    <header class="radical-head">
+      <div class="title">部首検索</div>
+      <div class="controls">
+        <label class="select-wrap select">
+          <select id="radicalStrokeFilter" aria-label="部首画数で絞り込み">
+            <option value="">部首画数</option>
+            <!-- JSが 1画,2画… を自動生成 -->
+          </select>
+        </label>
+        <button id="radical-close" class="btn-ghost" type="button">閉じる</button>
+      </div>
+    </header>
+
+    <!-- 部首一覧（画数ごとに並べる） -->
+    <div id="radical-grid" class="radical-grid">
+      <!-- JSが 1画の部首 / 2画の部首 … をタイル表示 -->
+    </div>
+    <small class="radical-hint">部首をタップすると下に候補が表示されます</small>
+  </section>
+  <!-- 画数検索パネル（検索ブロック内） -->
+<section id="strokes-panel" class="strokes-panel hidden" aria-hidden="true">
+  <header class="radical-head">
+    <div class="title">画数検索</div>
+    <div class="controls">
+      <label class="select-wrap select">
+        <select id="strokesCount" aria-label="画数を選択">
+        </select>
+      </label>
+      <button id="strokes-close" class="btn-ghost" type="button">閉じる</button>
+    </div>
+  </header>
+  <div id="strokes-grid" class="radical-grid"></div>
+</section>
+<!-- 検索履歴（カード群） -->
+
+<section id="history-panel" class="hidden" aria-hidden="true">
+    <header class="history-head">
+    <div class="title">検索履歴</div>
+          <div class="controls">
+<label class="select-wrap select">
+  <select id="historyFilter" aria-label="履歴条件を選択"></select>
+</label>
+      <button id="history-close" class="btn-ghost">閉じる</button>
+    </div>
+    </header>
+      <div id="history-grid" class="card-grid"></div>
+
+</section>
+ </section>
+
+<!-- 部首の検索結果（カード群） -->
+<section id="radical-results" class="radical-results hidden card" aria-hidden="true">
+  <h2 class="block-title">部首検索結果</h2>
+  <div id="radical-picked" class="radical-picked"></div>
+  <div id="radical-lists"  class="radical-lists"></div>
+</section>
+
+
+
+
+ <!-- 一覧ブロック -->
+  <section id="listSection">
+
+ <section class="list-block card" aria-labelledby="listTitle">
+  <div class="list-head">
+    <h2 id="listTitle">一覧</h2>
+    <div class="range100">
+  <button id="rangePrev" class="btn-ghost" type="button" aria-label="前の100件">‹</button>
+  <select id="rangeSelect" aria-label="番号で絞り込み（100件ごと）">
+    <option value="">すべて（1–2200）</option>
+    <!-- JSで 1–100 / 101–200 … を自動生成 -->
+  </select>
+  <button id="rangeNext" class="btn-ghost" type="button" aria-label="次の100件">›</button>
+</div>
+
+    <div class="filters">
+      <label class="select">
+        <span>JLPT</span>
+        <select id="filter-jlpt">
+          <option value="">すべて</option>
+          <option>N5</option><option>N4</option><option>N3</option><option>N2</option><option>N1</option>
+        </select>
+      </label>
+      <label class="select">
+        <span>学年</span>
+        <select id="filter-grade">
+          <option value="">すべて</option>
+          <option>小1</option><option>小2</option><option>小3</option><option>小4</option><option>小5</option><option>小6</option>
+        </select>
+      </label>
+    </div>
+  </div>
+
+  <div id="list" class="grid"></div>
+ </section>
+  </section>
+  <div id="bottomNav" data-bottom-src="./common/bottom-nav.html"></div>
+ </main>
+</div> <!-- /.layout -->
+  <dialog id="detail">
+    <button class="close" autofocus>&times;</button>
+    <div class="d-wrap">
+      <div class="d-kanji" id="d-kanji"></div>
+      <div class="d-meta" id="d-meta"></div>
+      <div class="d-stroke">
+        <h3>書き順</h3>
+        <div id="stroke-area">
+          <!-- 優先: データ同梱の「漢字と筆順の画像」、なければ KanjiVG を自動ロード -->
+        </div>
+      </div>
+      <div class="d-comp" id="d-comp"></div>
+    </div>
+  </dialog>
+
+  <!-- …main の閉じタグの直前あたりに -->
+
+
+
+<!-- 共通ローダー（common.zip の js） -->
+<script src="./common/header.js" defer></script>
+<script src="./common/sidebar.js" defer></script>
+<script src="./common/bottom-nav-loader.js" defer></script>
+
+<!-- このページ用の既存スクリプト -->
+<!-- Zinnia 本体（PageSpeed回避のクエリ付きはそのまま） -->
+<script src="./vendor/zinnia/zinnia.js?ModPagespeed=off"></script>
+<script type="module">
+  import { initZinnia } from "./vendor/zinnia/zinnia-loader.js?ModPagespeed=off";
+  window.__initZinnia = (url = "./models/handwriting-ja.model") => initZinnia(url);
+</script>
+
+<!-- ページ用：ES Modules -->
+ 
+<script type="module" src="./js/index.js"></script>
+
+</body>
+
+</html>

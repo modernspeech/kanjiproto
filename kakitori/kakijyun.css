@@ -1,0 +1,298 @@
+:root{
+  --bg:#ffffff; --fg:#5d5d5d; --muted:#000000; --card:#ffffff;
+  --border-strong:#1e2633; --border-soft:#e5e7eb;
+  --brand:#f28b35; --pill-bg:#ffe7d4; --pill-fg:#8a3e09; --pill-bd:#f3d0b4;
+}
+body,button,input,select { font-family: "Klee One", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif; }
+
+/* ページ見出し */
+.page-title{
+  margin: 6px 0 16px;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: .04em;
+}
+
+/* 2カラムレイアウト（PC） */
+.kakijyun-wrap{
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  grid-auto-rows: auto;
+  gap: 24px 28px;
+  width: 100%;
+}
+.kakijyun-wrap .left-col{ grid-column: 1; }
+.kakijyun-wrap .right-col{ grid-column: 2; }
+@media (max-width: 992px){
+  .kakijyun-wrap{
+    grid-template-columns: 1fr;
+  }
+  .kakijyun-wrap .left-col,
+  .kakijyun-wrap .right-col{ grid-column: 1; }
+}
+
+.btn-back {
+    background: #969696;
+    color: #fff;
+    /*border-color: #329aef;*/
+    border: 1px solid #2a3446;
+    border-radius: 99px;
+    padding: 8px 10px;
+    min-width: 80px;
+    cursor: pointer;
+}
+.d-card {
+    background: #fafafa;
+    border: 1px solid var(--border-soft);
+    border-radius: 14px;
+    padding: 16px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, .05);
+}
+
+.d-card h3,.ink-head h3 {
+    font-size: 1.1rem;
+    margin: 6px 0;
+}
+
+/* 左上：アニメホスト（正方形） */
+.anim-host{
+  width: 240px;            /* モックの小さめ正方形 */
+  aspect-ratio: 1 / 1;
+  margin: 6px auto 10px;
+  border-radius: 16px;
+  border: 1px solid #e5e7eb;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  background: #fff;
+}
+.anim-host iframe{
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+/* 細いサムネ列 */
+.thumb-strip{
+  display:flex; align-items:center; gap:6px;
+  margin: 6px auto 0;
+  width: 240px;
+  font-size: 12px; color:#444;
+}
+.thumb-badge{
+  display:inline-block; padding:2px 6px; border-radius:4px;
+  background:#cc1f1a; color:#fff; font-weight:700; letter-spacing:.04em;
+}
+.thumb-cell{
+  display:inline-grid; place-items:center;
+  width:22px; height:22px; border:1px solid #cfd5db;
+  border-radius:2px; color:#333; background:#fff;
+}
+
+/* 書き順画像カード */
+#stroke-area img{
+  display:block; width:100%; height:auto; border-radius:12px;
+  box-shadow:0 4px 16px rgba(0,0,0,.06);
+}
+
+/* 右：パッド外枠（モックの大きい白枠） */
+.ink-panel{
+  background:#fff;
+  border-radius:16px;
+  box-shadow:0 10px 28px rgba(0,0,0,.08);
+  padding:16px 16px 20px;
+}
+.ink-head{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:6px 4px 12px;
+}
+.ink-head .title{ font-weight:700; letter-spacing:.04em; }
+
+/* パッド内部 2カラム
+.ink{
+  display:grid; grid-template-columns: 1fr 1fr; gap: 22px;
+} */
+@media (max-width: 992px){
+  .ink{ grid-template-columns: 1fr; }
+}
+
+/* ボタン系（色味をモックに近づけ） */
+.ink-button button{
+  min-width: 92px;
+  height: 36px;
+  padding: 0 12px;
+  border: 0; border-radius: 8px;
+  background:#9aa0a6; color:#fff; cursor:pointer;
+}
+.ink-button button[aria-pressed="true"]{ filter: brightness(0.95); }
+
+.btn-judge{
+  height: 40px; min-width: 200px;
+  border: 0; border-radius: 10px; cursor:pointer;
+  background:#f2995a; color:#fff; font-weight:700;
+  box-shadow: 0 4px 12px rgba(242,153,90,.35);
+}
+
+/* ヒント */
+.ink-hint{ color:#6b7280; display:block; margin-top:8px; }
+
+/* ====== レイアウト微調整（間隔と比率） ====== */
+.kakijyun-wrap{
+  grid-template-columns: 380px 1fr;  /* 左を少し広く、右は可変 */
+  gap: 28px 40px;
+}
+.page-title{ margin: 10px 0 22px; }
+
+/* ====== 左：アニメカードをモック寄りに ====== */
+
+.anim-host{
+  width: 250px;               /* 正方形を少し大きく */
+  max-width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 18px;
+  border: 1px solid #e8eaee;
+  box-shadow: 0 6px 18px rgba(16,24,40,.06) inset;
+}
+.anim-host iframe{ border-radius: 18px; }
+
+/* 下の細い帯（番号＋小コマ）のトンマナ */
+.thumb-strip{
+  width: 360px;
+  gap: 8px;
+  margin-top: 12px;
+  color:#3b3f45;
+}
+.thumb-badge{
+  background: #e02424;        /* 赤を少し明るめに */
+  border-radius: 8px;
+  padding: 3px 8px;
+  font-size: 12px;
+  line-height: 1;
+  box-shadow: 0 2px 0 rgba(0,0,0,.05) inset;
+}
+.thumb-cell{
+  width: 24px; height: 24px;
+  font-size: 12px;
+  border-color:#d7dde4;
+  border-radius: 3px;
+}
+
+/* 「書き順」ブロックの見た目を揃える */
+
+#stroke-area {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 10px 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ====== 右：手書きパネルをモック寄りに ====== */
+.ink-panel{
+  padding: 18px 22px 22px;
+  border-radius: 20px;
+  box-shadow: 0 12px 30px rgba(16,24,40,.10);
+}
+.ink-head{ padding: 4px 2px 14px; }
+.ink-head .title{ font-size: 14px; color:#111827; }
+
+/* キャンバス枠：点線＋十字ガイド（CSSだけで再現） */
+#ink{
+  background:
+    linear-gradient(to right, transparent calc(50% - 0.5px), rgba(0,0,0,.06) calc(50% - 0.5px), rgba(0,0,0,.06) calc(50% + 0.5px), transparent calc(50% + 0.5px)),
+    linear-gradient(to bottom, transparent calc(50% - 0.5px), rgba(0,0,0,.06) calc(50% - 0.5px), rgba(0,0,0,.06) calc(50% + 0.5px), transparent calc(50% + 0.5px));
+  border: 2px dashed #c9ced6;
+  border-radius: 12px;
+  background-color: #f3f4f6;
+  outline: 1px dashed rgba(0,0,0,.06);
+  outline-offset: 8px;                 /* 周囲の点線を薄く */
+}
+
+/* ボタンを“ピル型＋陰影”に */
+.ink-tools{
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px 14px;
+  align-items: center;
+  margin-top: 10px;
+}
+.ink-button{ display:flex; gap:10px; }
+.ink-button button{
+  min-width: 96px; height: 38px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 9999px;
+  background:#9aa0a6; color:#fff; font-weight:600;
+  box-shadow: 0 2px 0 rgba(0,0,0,.06) inset, 0 2px 8px rgba(16,24,40,.12);
+}
+.ink-button button[aria-pressed="true"]{ filter:brightness(.96); }
+
+.btn-judge{
+  height: 42px; min-width: 220px;
+  border-radius: 12px;
+  background:#f2995a; color:#fff; font-weight:800;
+  letter-spacing:.02em;
+  box-shadow: 0 6px 18px rgba(242,153,90,.35);
+}
+
+/* ヒントの色味＆余白調整 */
+.ink-hint{
+  margin-top: 10px;
+  color:#6b7280;
+}
+
+/* スマホ時の積み順 */
+@media (max-width: 992px){
+  .kakijyun-wrap{ display: flex;
+    flex-direction: column-reverse;}
+  .anim-host, .thumb-strip{ width: 90%; }
+  .ink-button {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+    justify-content: space-between;}
+.ink-tools button {
+
+    /* min-width: 80px; */
+
+    width: 48%;
+}
+button{font-size:1.1rem; }
+}
+
+
+.card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+/* =========================================================
+   6) Ink (手書きUI)
+   ========================================================= */
+/*.ink{ display:grid; grid-template-columns:300px 1fr; gap:14px; padding:10px 16px 0; justify-items:center; }*/
+@media (max-width:840px){ .ink{ grid-template-columns:1fr; } }
+.ink-left{ width:100%; max-width:min(480px,100%); display:flex; flex-direction:column; align-items:center; }
+#ink{ background:#d5d5d5; border-radius:12px; touch-action:none; display:block; margin:0 auto; }
+/* 重要：二重指定でもOKだが統一 */
+#ink{ touch-action:none; }
+.ink-tools{ display:flex; flex-wrap:wrap; gap:8px; justify-content:center; margin-top:8px; }
+.ink-button{ display:flex; gap:10px; }
+.ink-tools button{
+  background:#e7e7e7; color:#5b5b5b; border:1px solid #2a3446; border-radius:99px; padding:8px 10px; min-width:80px; cursor:pointer;
+}
+.ink-tools button:hover{ filter:brightness(1.1); }
+#ink-grid{ background:#329aef; color:#fff; border-color:#329aef; }
+#ink-grid[aria-pressed="false"]{ background:#d7ecfc; color:#000; }
+#ink-search{ background:var(--brand); color:#fff; border-color:var(--brand); width:100%; }
+.ink-hint{ color:#9aabc4; }
+.ink-topk{ display:grid; grid-template-columns:repeat(auto-fill,minmax(120px,1fr)); gap:8px; padding:8px; }
+.ink-cand{ background:#0f1319; border:1px solid #2a3546; border-radius:10px; padding:6px 8px; min-width:56px; text-align:center; }
+.ink-cand .big{ font-size:32px; display:block; }
+.ink-cand small{ color:#9aabc4; display:block; }

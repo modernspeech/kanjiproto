@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>書き順xxxx◯</title>
+
+  <!-- このページ専用CSS（同じフォルダに kakijyun.css が無ければ、この行は外す） -->
+  <link rel="stylesheet" href="./kakijyun.css" />
+
+<!-- Google Fonts を最速化 -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<!-- stylesheet は display=block（フォント来るまでブロック） -->
+<link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&display=block" rel="stylesheet">
+  <style>
+    body { font-family: "Klee One"; }
+    .klee { font-family: "Klee One"; }
+  </style>
+
+  <!-- 共通CSSは 1つ上の階層にある想定なので ../common/... で読む -->
+  <link rel="stylesheet" href="../common/header.css" data-pagespeed-no-transform>
+  <link rel="stylesheet" href="../common/sidebar.css" data-pagespeed-no-transform>
+  <link rel="stylesheet" href="../common/home.css"   data-pagespeed-no-transform>
+      <link rel="stylesheet" href="../common/setting.css"
+      data-pagespeed-no-transform>  
+<link rel="stylesheet" href="../common/bottom-nav.css" data-pagespeed-no-transform>
+</head>
+<body>
+
+    <!-- 共通ヘッダー／サイドバー読み込み領域 -->
+  <div id="siteHeader" data-header-src="../common/header.html"></div>
+  <div class="page-bg"></div>
+  <div class="home-layout layout d-wrap kakijyun-bg">
+    <!-- サイドバー（PC表示） -->
+    <aside id="siteSidebar" data-sidebar-src="../common/sidebar.html"></aside>
+
+    <!-- ======= ここから置き換え ======= -->
+     <main class="content">
+
+<div class="card">
+              <header class="kaki-header">
+    <button type="button" id="btn-back" class="btn-back">← もどる</button>
+    <!-- 他のヘッダー要素など -->
+  </header>
+  <h2 class="page-title">漢字書き取り</h2>
+<div class="kakijyun-wrap">
+      <!-- 左カラム -->
+      <section class="left-col">
+        <!-- 左上カード：アニメ -->
+          <div id="anim-host" class="anim-host d-card">
+            <iframe id="anim-frame" title="書き順動画" loading="lazy"></iframe>
+          </div>
+
+        <!-- 書き順（静止画像） -->
+        <div class="d-card">
+          <h3>書き順</h3>
+          <div id="stroke-area"><!-- JSで静止画像を差し込む --></div>
+        </div>
+      </section>
+
+      <!-- 右カラム：手書きパッド -->
+      <section id="ink-panel" class="ink-panel right-col d-card" aria-hidden="false">
+        <header class="ink-head">
+          <!--<h3>漢字書き取り</h3>-->
+          <div class="controls"></div>
+        </header>
+        <div class="ink">
+            <canvas id="ink" width="320" height="320" aria-label="手書き入力パッド"></canvas>
+            <div class="ink-tools">
+              <div class="ink-button">
+                <button id="ink-clear"  type="button">クリア</button>
+                <button id="ink-undo"   type="button">一筆もどす</button>
+                <button id="ink-grid"   type="button" aria-pressed="true">罫線</button>
+                <button id="ink-sample" type="button" aria-pressed="true">サンプル</button>
+              </div>
+              <button id="ink-search" class="btn-judge" type="button">判定</button>
+            </div>
+            <small class="ink-hint">太めに1文字だけ書いてください（複数画OK）</small>
+
+        </div>
+      </section></div></div>
+    </main>
+    <!-- ======= 置き換えここまで ======= -->
+  </div>
+
+  <!-- 共通ローダー（common.zip の js）: 1つ上の階層にあるので ../common/... -->
+  <script src="../common/header.js" defer></script>
+  <script src="../common/sidebar.js" defer></script>
+  <script src="../common/bottom-nav-loader.js" defer></script>
+
+<!-- ★ CreateJS 本体（Animateのランタイム） -->
+<script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
+
+
+  <!-- Zinnia 本体（1つ上の階層に vendor/zinnia/ がある想定） -->
+  <script src="../vendor/zinnia/zinnia.js?ModPagespeed=off"></script>
+  <script type="module">
+    import { initZinnia } from "../vendor/zinnia/zinnia-loader.js?ModPagespeed=off";
+    // kakijyun.js が使う初期化関数をグローバル公開
+    window.__initZinnia = (url = "./models/handwriting-ja.model") => initZinnia(url);
+  </script>
+  <script src="../js/setting.js" defer></script>
+
+  <!-- ここ大事：このページ用の JS は同じフォルダに置くので ./kakijyun.js -->
+  <script type="module" src="./kakijyun.js" defer></script>
+
+</body>
+</html>

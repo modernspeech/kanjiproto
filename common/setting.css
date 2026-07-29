@@ -1,0 +1,120 @@
+/* ==== 基本変数 ==== */
+:root{
+  --bg:#eef1f5;
+  --card:#fff;
+  --text:#1b1e28;
+  --muted:#8c94a5;
+  --border:#dde2ec;
+  --primary-1:#6ea2ff;
+  --primary-2:#6b8df0;
+  --focus:#5b8cff;
+  --shadow:0 8px 30px rgba(0,0,0,0.08);
+  --header-h: 64px;
+    --border-strong:#1e2633; --border-soft:#e5e7eb;
+  --brand:#f28b35; --pill-bg:#ffe7d4; --pill-fg:#8a3e09; --pill-bd:#f3d0b4;
+}
+h2{
+    margin:0 10px 0;
+}
+.s-help{
+    margin: 10px;
+}
+.s-label{
+        margin: 10px 10px 10px 0;
+}
+.s-field{
+        margin: 10px;
+}
+.s-foot{
+    display: flex;
+    gap: 10px;
+    margin: 15px 0;
+justify-content: center
+}
+.s-input{
+    padding: 14px 16px;
+    border: 1px solid var(--border-soft);
+    border-radius: 999px;
+}
+.muted {
+    color: #777;
+    font-size: 13px;
+    margin: 0 0 20px;
+}
+.btn-reset, .btn-detail {
+    background: #fff;
+    color: #f29b4b;
+    border: 1px solid #f29b4b;
+        border-radius: 999px;
+    padding: 8px 14px;
+}
+    
+.close{
+appearance: none;
+    border: 1px solid var(--border-soft);
+    background: #fff;
+    color: #333;
+    width: 36px;
+    height: 36px;
+    border-radius: 999px;
+    display: grid;
+    place-items: center;
+    font-size: 20px;
+    cursor: pointer;
+    align-items: stretch;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .08);
+    transition: background .2s ease, color .2s ease;
+}
+.btn-cancel {
+    border: 1px solid var(--border-soft);
+    background: #fff;
+    padding: 10px 12px;
+    border-radius: 999px;
+    cursor: pointer;
+    min-width: 40px;
+    transition: background .15s, color .15s, border-color .15s;
+}
+
+.btn-save {
+    border: none;
+    background: var(--brand);
+    color: #fff;
+    padding: 10px 16px;
+    border-radius: 999px;
+    cursor: pointer;
+    min-width: 92px;
+}
+
+
+#settingsDialog{
+position: fixed;
+}
+
+/* ダイアログ全体を基準にする */
+.settings-dialog {
+  position: relative;
+}
+
+/* × ボタンを右上に固定 */
+.settings-dialog .close {
+  position: absolute;
+  top: 12px;     /* お好みで調整 */
+  right: 12px;   /* お好みで調整 */
+
+  /* 既存スタイルがあれば上書き用にお好みで */
+  background: transparent;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* form 自体は幅を取らないように */
+.settings-dialog form {
+  margin: 0;
+}
+
+
+@media (max-width: 768px) {
+.s-foot button {
+        font-size: 0.85rem;
+    }
+}

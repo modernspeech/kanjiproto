@@ -1,0 +1,328 @@
+/* ==== テスト一覧 ==== */
+.t-card {
+min-height: 300px;
+}
+
+.test-columns {
+  margin-top: 24px;
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;   /* 伸び防止 */
+  flex-wrap: wrap;           /* SPで折り返し */
+}
+.test-column{
+  flex: 1 1 420px;           /* 2カラム基準。好みで調整 */
+  min-width: 280px;
+}
+
+.test-column h2 {
+  font-size: 18px;
+  margin-bottom: 12px;
+}
+
+.test-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.test-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 999px;
+  background: #ffecea;
+  cursor: pointer;
+  font-size: 14px;
+  text-align: left;
+  transition: box-shadow 0.2s, transform 0.1s;
+}
+
+.test-item-no {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background: #fff;
+  font-weight: 600;
+}
+
+.test-item-label {
+  flex: 1;
+    font-size: .95rem;
+}
+
+.test-item:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+  transform: translateY(-1px);
+}
+
+/* ==== 問題画面 ==== */
+
+.page-inner {
+  padding: 24px 28px;
+}
+
+.progress-bar-wrap {
+  width: 100%;
+  height: 8px;
+  border-radius: 999px;
+  background: #eceff3;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  background: #f29b4b;
+  border-radius: inherit;
+  transition: width 0.25s ease-out;
+}
+
+.progress-bar.done {
+  width: 100%;
+}
+
+.question-card {
+  max-width: 640px;
+  margin: 24px auto;
+  border-radius: 24px;
+  background: #ffe9d9;
+  padding: 24px 28px 32px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
+}
+
+.question-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 52px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #f29b4b;
+  color: #fff;
+  font-weight: 600;
+}
+
+.badge-sub {
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: #ffd7a6;
+  font-size: 13px;
+}
+
+.quiz-word {
+  font-size: 28px;
+  text-align: center;
+  margin: 8px 0;
+}
+
+.quiz-hint {
+  font-size: 1.1rem;
+  text-align: center;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.quiz-input {
+  width: 100%;
+  font-size: 18px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+}
+
+.quiz-input:focus {
+  outline: none;
+  border-color: #f29b4b;
+  box-shadow: 0 0 0 3px rgba(242, 155, 75, 0.25);
+}
+
+.quiz-buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.btn-primary,
+.btn-secondary,
+.btn-link {
+  font-size: 14px;
+  padding: 8px 26px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: #f29b4b;
+  color: #fff;
+}
+
+.btn-secondary, .btn-detail {
+  background: #fff;
+  color: #f29b4b;
+  border: 1px solid #f29b4b;
+}
+
+.btn-link {
+  background: none;
+  border: none;
+  color: #555;
+  padding: 4px 0;
+}
+
+.quiz-feedback {
+  margin-top: 12px;
+  text-align: center;
+  font-size: 14px;
+}
+
+/* ==== 結果画面 ==== */
+
+.result-header {
+  display: flex;
+justify-content: center;
+  align-items: center;
+  gap: 32px;
+  margin: 24px 0;
+}
+
+.score-circle {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  border: 10px solid #f29b4b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.score-unit {
+  font-size: 16px;
+  margin-left: 4px;
+}
+
+.result-summary {
+  font-size: 14px;
+}
+
+.result-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.result-table-wrap {
+  max-width: 720px;
+  margin: 0 auto 32px;
+  overflow-x: auto;
+}
+
+.result-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.result-table th,
+.result-table td {
+  border: 1px solid #ddd;
+  padding: 6px 8px;
+  text-align: center;
+}
+
+.result-table th {
+  background: #f8f9fb;
+}
+
+/* 汎用 */
+
+.muted {
+  color: #777;
+  font-size: 13px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* ===== ドーナツゲージ (共通) ===== */
+.score-gauge { width: 160px; height: 160px; }
+.gauge { width: 100%; height: 100%; transform: rotate(-90deg); }
+
+.g-track, .g-progress {
+  fill: none;
+  stroke-width: 10;
+  cx: 60; cy: 60; r: 54;
+}
+
+.g-track   { stroke: #eee; }
+.g-progress{ stroke: #f29b4b; stroke-linecap: round; transition: stroke-dashoffset .5s ease; }
+
+.g-label {
+  font: 700 28px/1.1 system-ui, -apple-system, "Segoe UI", sans-serif;
+  text-anchor: middle;
+  dominant-baseline: middle;
+  transform: rotate(90deg);
+  transform-origin: 60px 60px; /* 文字だけ元の向きに戻す */
+  fill: #333;
+}
+.g-unit { font: 600 14px/1; fill:#666; }
+
+/* ===== Accordion (test list) ===== */
+.acc { border: 1px solid var(--border-soft, #e5e7eb); border-radius: 12px; background:#fff; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,.04); width: 48%;  }
+/*.acc + .acc { margin-top: 12px; }*/
+
+.acc-summary{
+  width:100%; text-align:left; display:flex; align-items:center; justify-content:space-between;
+  gap:12px; padding:14px 16px; background:#fff; border:0; cursor:pointer;
+  font-size:16px; font-weight:700; color:var(--fg, #333);
+}
+.acc-summary:focus-visible{ outline: 3px solid rgba(14,165,233,.35); outline-offset:2px; border-radius: 12px; }
+
+.acc-icon{ transition: transform .18s ease; }
+.acc-summary[aria-expanded="true"] .acc-icon{ transform: rotate(180deg); }
+
+.acc-panel{
+  /* アニメーション用：高さをJSで制御。hidden時はdisplayを保ったまま visibility/heightで隠す */
+  overflow: clip;
+  transition: height .18s ease;
+}
+.acc-panel[hidden]{ display: block; height: 0 !important; visibility: hidden; }
+
+.acc-panel-inner{ padding: 12px 16px 16px; }
+
+@media (max-width:840px){
+.result-header {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+.acc { width: 100%;  }
+
+.btn-detail{
+width: 47px;
+    padding: 0;
+    font-size: 15px;}
+.quiz-hint {
+    font-size: .9rem;}
+.question-card {
+    padding: 24px 10px 32px;
+}
+}

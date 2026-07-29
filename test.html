@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <title>読みテスト | KANJI2200</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="./style.css" />
+<!-- head 内に追加（必要な太さだけ。Klee One は 400 / 600）-->
+<link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+  /* 全体に適用する例 */
+  body { font-family: "Klee One", "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif; }
+  /* 見出しだけに使う例（推奨） */
+  .klee { font-family: "Klee One", sans-serif; }
+  
+</style>
+<link rel="stylesheet" href="common/header.css"
+      data-pagespeed-no-transform>
+<link rel="stylesheet" href="common/sidebar.css"
+      data-pagespeed-no-transform>
+<link rel="stylesheet" href="common/home.css"
+      data-pagespeed-no-transform>
+      <link rel="stylesheet" href="common/setting.css"
+      data-pagespeed-no-transform>
+  <link rel="stylesheet" href="common/bottom-nav.css">
+  <link rel="stylesheet" href="css/reading-test.css"
+      data-pagespeed-no-transform>
+</head>
+<body>
+  <!-- ヘッダー -->
+  <div id="siteHeader" data-header-src="./common/header.html"></div>
+
+  <div class="page-bg"></div>
+  <div class="home-layout layout">
+
+    <!-- サイドバー -->
+    <aside id="siteSidebar" data-sidebar-src="./common/sidebar.html"></aside>
+
+    <!-- メイン -->
+    <main class="content">
+
+        <!-- テスト一覧ビュー -->
+        <section id="view-test-list" class="card t-card">
+          <h1 class="page-title">テスト一覧</h1>
+
+<div class="test-columns">
+  <!-- 読みテスト -->
+  <div class="acc" data-acc>
+    <button
+      class="acc-summary"
+      type="button"
+      id="acc-reading"
+      aria-expanded="true"
+      aria-controls="acc-panel-reading"
+    >
+      読みテスト
+      <span class="acc-icon" aria-hidden="true">▾</span>
+    </button>
+    <div
+      class="acc-panel"
+      id="acc-panel-reading"
+      role="region"
+      aria-labelledby="acc-reading"
+      data-acc-panel
+    >
+      <div class="acc-panel-inner">
+        <div id="readingTestList" class="test-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 書きテスト（準備中） -->
+  <div class="acc" data-acc>
+    <button
+      class="acc-summary"
+      type="button"
+      id="acc-writing"
+      aria-expanded="false"
+      aria-controls="acc-panel-writing"
+    >
+      書きテスト
+      <span class="acc-icon" aria-hidden="true">▾</span>
+    </button>
+    <div
+      class="acc-panel"
+      id="acc-panel-writing"
+      role="region"
+      aria-labelledby="acc-writing"
+      data-acc-panel
+      hidden
+    >
+      <div class="acc-panel-inner">
+        <p>※書きテストは準備中です。</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+        </section>
+
+        <!-- 問題ビュー -->
+        <section id="view-quiz" class="hidden card">
+          <button type="button" id="btnBackToList" class="btn-link">&lt; テスト一覧に戻る</button>
+
+          <div class="progress-bar-wrap">
+            <div id="quizProgressBar" class="progress-bar"></div>
+          </div>
+
+          <h1 class="page-title">読みテスト</h1>
+          <p id="quizRangeLabel" class="muted"></p>
+
+          <div class="question-card">
+            <div class="question-header">
+              <span id="quizQuestionNumberLabel" class="badge">Q1</span>
+              <span id="quizKanjiNoLabel" class="badge-sub">漢字番号</span>
+            </div>
+
+            <div class="question-body">
+              <p id="quizHint" class="quiz-hint">次の単語の読み方をひらがなで書きなさい。<br>単語のひらがなの部分も書くこと。<br>※（ ）内のひらがなは除く</p>
+
+              <p id="quizWord" class="quiz-word">前日</p>
+
+              <input id="quizAnswerInput" type="text" class="quiz-input" autocomplete="off" />
+
+              <div class="quiz-buttons">
+                <button type="button" id="btnSubmitAnswer" class="btn-primary">決定</button>
+              </div>
+
+              <p id="quizFeedback" class="quiz-feedback"></p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 結果ビュー（1グループ分） -->
+        <section id="view-result" class="hidden card">
+          <button type="button" id="btnResultBackList" class="btn-link">&lt; テスト一覧に戻る</button>
+
+          <div class="progress-bar-wrap">
+            <div class="progress-bar done"></div>
+          </div>
+
+          <h1 class="page-title">読みテスト 結果</h1>
+          <p id="resultRangeLabel" class="muted"></p>
+
+          <div class="result-header">
+            <!-- これまでの <div class="score-circle">… を下記に置換 -->
+            <div class="score-gauge" data-gauge>
+            <svg viewBox="0 0 120 120" class="gauge">
+                <circle class="g-track"   cx="60" cy="60" r="54"></circle>
+                <circle class="g-progress" cx="60" cy="60" r="54"></circle>
+                <text x="60" y="66" class="g-label">
+                <tspan data-score>0</tspan><tspan class="g-unit">点</tspan>
+                </text>
+            </svg>
+            </div>
+
+            <div class="result-summary">
+              <p id="resultCount">0問/0問中</p>
+              <div class="result-buttons">
+                <button type="button" id="btnRetryGroup" class="btn-secondary">RETRY</button>
+                <button type="button" id="btnNextGroup" class="btn-primary">NEXT</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="result-table-wrap">
+            <table class="result-table">
+              <thead>
+                <tr>
+                  <th>Q</th>
+                  <th>単語</th>
+                  <th>解答</th>
+                  <th>正解</th>
+                  <th>成否</th>
+                <th>詳細</th> <!-- 追加 -->
+                </tr>
+              </thead>
+              <tbody id="resultTableBody"></tbody>
+            </table>
+          </div>
+        </section>
+<!-- メイン <main> 内のどこか目立たない位置でOK -->
+<div id="list" class="hidden" aria-hidden="true"></div>
+
+    </main>
+  </div>
+<!-- 詳細モーダル（common.js が制御） -->
+<dialog id="detail" class="kanji-detail-dialog">
+  <!-- JS が .d-head（閉じる×ボタン含む）を自動で差し込みます -->
+
+  <!-- ★ 重要：.d-wrap がないと検索と同じレイアウトになりません -->
+  <div class="d-wrap">
+    <!-- 左/右/下段は JS が組み立て直すので、最小の“入れ物”だけ置く -->
+    <div id="d-kanji" class="d-card d-kanji"></div>
+    <div id="stroke-area" class="d-card d-stroke"></div>
+    <div id="d-meta" class="d-card d-meta"></div>
+
+    <!-- ↓ 熟語は「見出し<h3>を外側」に・中身は #d-comp に入れる -->
+    <div class="d-comp-wrap" style="grid-column: 1 / -1;">
+      <h3>熟語</h3>
+      <div id="d-comp" class="d-comp"></div>
+    </div>
+
+    <!-- 例文は common.js が #example-area に書き込みます -->
+    <section class="d-example" style="grid-column: 1 / -1;">
+      <h3>例文</h3>
+      <div id="example-area"></div>
+    </section>
+  </div>
+</dialog>
+
+
+  <!-- ボトムメニュー -->
+  <div id="bottomNav" data-bottom-src="/common/bottom-nav.html"></div>
+
+  <!-- 共通パーツ -->
+<script src="./common/header.js" defer></script>
+<script src="./common/sidebar.js" defer></script>
+<script src="./common/bottom-nav-loader.js" defer></script>
+
+  <script type="module" src="./js/index.js" defer></script>
+
+  <!-- 読みテスト用ロジック -->
+<script src="./js/reading-test.js" defer></script>
+
+<!-- クエリを一旦外して 500 の切り分け -->
+<!-- ③ 最後に loadData 呼び出し -->
+<script type="module">
+  import { loadData } from "./js/common.js";
+  document.addEventListener("DOMContentLoaded", async () => {
+    console.log("[test] loadData 実行開始");
+    try {
+      await loadData();
+      console.log("[test] loadData 完了");
+    } catch (e) {
+      console.error("[test] loadData 失敗:", e);
+    }
+  });
+</script>
+
+
+</body>
+</html>
